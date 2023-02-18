@@ -1,27 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Diagnostics;
 using System.Diagnostics.Eventing.Reader;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
-using System.Security.Cryptography;
-using System.IO;
 using System.Collections.ObjectModel;
-using System.Xml.Linq;
 using System.Management.Automation;
-using System.Globalization;
-using System.Text.RegularExpressions;
 using System.Configuration;
 
-namespace WindowsFormsApp3
+namespace CheckFailedProfile
 {
-    
+
     public partial class Form1 : Form
     {
         public Form1()
@@ -42,34 +28,26 @@ namespace WindowsFormsApp3
             Form1.ActiveForm.Close();
         }
         
-        private void send_message(string userName, string sid, string message, string time)
+        private void send_message(string text)
         {
             int port = Convert.ToInt32(ConfigurationSettings.AppSettings["port"]);
             string recipients= ConfigurationSettings.AppSettings["recipients"];
             string sender= ConfigurationSettings.AppSettings["sender"];
             string mailserver= ConfigurationSettings.AppSettings["mailserver"];
-        
-
-
-            var smtpClient = new System.Net.Mail.SmtpClient(mailserver)
-            {
-                Port = port,
-            };
             string recipient = recipients;
             string subject = "TSFarm profile problem";
-            string body = "Произошла ошибка подключения диска профиля" + 
-                "\nИмя пользователя " + userName +
-                " " + sid + "\nНа сервере - " + Environment.MachineName.ToString() + "\n"
-                + message
-                + "\nВремя события - " + time;
             string email = sender;
             try
             {
-                smtpClient.Send(email, recipient, subject, body);
+                var smtpClient = new System.Net.Mail.SmtpClient(mailserver)
+                {
+                    Port = port,
+                };
+                smtpClient.Send(email, recipient, subject, text);
             }
             catch
             {
-
+                richTextBox2.Text += "\n\n\n\nНе уадлось отправить сообщение.";
             }
         }
 
@@ -113,9 +91,20 @@ namespace WindowsFormsApp3
             ExitWindowsEx(0, 0);
         }
 
+        public void ResultMessage(string userName, string sid, string message, string time)
+        {
+            string text= "Сведения для администраторов:" +
+            "\nИмя пользователя: " + userName +
+            "\nSID: " + sid +
+            "\nСообщение: " + message +
+            "\nИмя компьютера: " + Environment.MachineName.ToString() +
+            "\nВремя:" + time;
+            richTextBox2.Text = text;
+            send_message(text);
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
-            richTextBox2.Text = "Сведения для администраторов: \n";
             string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
             string sid = System.Security.Principal.WindowsIdentity.GetCurrent().User.ToString();
             string logType = "Microsoft-FSLogix-Apps/Operational";
@@ -135,14 +124,7 @@ namespace WindowsFormsApp3
                     if (eventInstance.FormatDescription() != null) {
                         message = eventInstance.FormatDescription();
                         time = eventInstance.TimeCreated.ToString();
-                        richTextBox2.Text = "Сведения для администраторов:" +
-                            "\nИмя пользователя: " + userName +
-                            "\nsid: " + sid +
-                            "\nСообщение: " + message +
-                            "\nИмя компьютера: " + Environment.MachineName.ToString() +
-                            "\nВремя:" + time;
-
-                        send_message(userName, sid, message, time);
+                        ResultMessage(userName, sid, message, time);
                         break;
                     }
                 }
@@ -177,13 +159,7 @@ namespace WindowsFormsApp3
                             time = DateTime.Now.ToString();
                         }
 
-                        richTextBox2.Text = "Сведения для администраторов:" +
-                            "\nИмя пользователя: " + userName +
-                            "\nsid: " + sid +
-                            "\nСообщение: " + message +
-                            "\nИмя компьютера: " + Environment.MachineName.ToString() +
-                            "\nВремя:" + time;
-                        send_message(userName, sid, message, time);
+                        ResultMessage(userName, sid, message, time);
                     }
                     else
                     {
@@ -221,13 +197,7 @@ namespace WindowsFormsApp3
                         time = DateTime.Now.ToString();
                     }
 
-                    richTextBox2.Text = "Сведения для администраторов:" +
-                        "\nИмя пользователя: "+userName + 
-                        "\nsid: " + sid +
-                        "\nСообщение: " + message +
-                        "\nИмя компьютера: " + Environment.MachineName.ToString() +
-                        "\nВремя:" + time;
-                    send_message(userName, sid, message, time);
+                    ResultMessage(userName, sid, message, time);
                 }
                 else
                 {

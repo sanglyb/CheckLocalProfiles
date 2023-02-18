@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApp3
+﻿namespace CheckFailedProfile
 {
     partial class Form1
     {
@@ -38,7 +38,7 @@
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(16, 399);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(303, 80);
             this.button1.TabIndex = 1;
@@ -49,7 +49,7 @@
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(327, 399);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button2.Margin = new System.Windows.Forms.Padding(4);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(317, 80);
             this.button2.TabIndex = 2;
@@ -60,7 +60,7 @@
             // richTextBox2
             // 
             this.richTextBox2.Location = new System.Drawing.Point(17, 225);
-            this.richTextBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.richTextBox2.Margin = new System.Windows.Forms.Padding(4);
             this.richTextBox2.Name = "richTextBox2";
             this.richTextBox2.Size = new System.Drawing.Size(625, 165);
             this.richTextBox2.TabIndex = 3;
@@ -88,12 +88,12 @@
             this.Controls.Add(this.button1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Ошибка загрузки профиля";
+            this.Text = "Возникла проблема с профилем";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
