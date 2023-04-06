@@ -25,7 +25,7 @@ namespace CheckFailedProfile
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Form1.ActiveForm.Close();
+            this.Close();
         }
         
         private void send_message(string text)
@@ -35,7 +35,7 @@ namespace CheckFailedProfile
             string sender= ConfigurationSettings.AppSettings["sender"];
             string mailserver= ConfigurationSettings.AppSettings["mailserver"];
             string recipient = recipients;
-            string subject = "TSFarm profile problem";
+            string subject = "fslogix profile problem";
             string email = sender;
             try
             {
@@ -47,7 +47,7 @@ namespace CheckFailedProfile
             }
             catch
             {
-                richTextBox2.Text += "\n\n\n\nНе уадлось отправить сообщение.";
+                richTextBox2.Text += "\n\n\n\nUnable to send a message.";
             }
         }
 
@@ -81,7 +81,7 @@ namespace CheckFailedProfile
             }
             if (!profileFound)
             {
-                result = "Профиль не найден";
+                result = "Profile not found";
             }
             return result;
         }
@@ -93,12 +93,12 @@ namespace CheckFailedProfile
 
         public void ResultMessage(string userName, string sid, string message, string time)
         {
-            string text= "Сведения для администраторов:" +
-            "\nИмя пользователя: " + userName +
+            string text= "Информация для администраторов:" +
+            "\nUsername: " + userName +
             "\nSID: " + sid +
-            "\nСообщение: " + message +
-            "\nИмя компьютера: " + Environment.MachineName.ToString() +
-            "\nВремя:" + time;
+            "\nMessage: " + message +
+            "\nComputer name: " + Environment.MachineName.ToString() +
+            "\nTime: " + time;
             richTextBox2.Text = text;
             send_message(text);
         }
