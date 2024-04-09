@@ -10,6 +10,7 @@ namespace CheckFailedProfile
 
     public partial class Form1 : Form
     {
+        public string message;
         public Form1()
         {
             InitializeComponent();
@@ -113,7 +114,7 @@ namespace CheckFailedProfile
             string query1 = "*[System[(EventID=26) " +
                 "and TimeCreated[timediff(@SystemTime) <= 120000]]]";
             string time = null;
-            string message = null;
+            message = null;
 
             try
             {
@@ -163,7 +164,7 @@ namespace CheckFailedProfile
                     }
                     else
                     {
-                        this.Close();
+                        //this.Close();
                     }
                 }
             } 
@@ -201,11 +202,19 @@ namespace CheckFailedProfile
                 }
                 else
                 {
-                    this.Close();
+                    //this.Close();
                 }
 
 
             }
-        }  
+        }
+
+        private void Form1_Shown(object sender, EventArgs e)
+        {
+            if (message == null)
+            {
+                this.Close();
+            }
+        }
     }
 }
